@@ -1,0 +1,166 @@
+%wiek(zenek,"5-12").
+%plec(zenek,"M").
+%z_kim(zenek,"Sam").
+%pora(zenek,"Rano").
+%platforma(zenek,"Telewizor").
+
+%gatunek(X,komedia):-
+%    (   wiek(X,"5-12"),
+%	plec(X,"M"),
+%	z_kim(X,"Sam"),
+%	pora(X,"Rano"),
+%	platforma(X,"Telewizor"));
+%    
+%boi_sie_ciemnosci(zenek).
+%
+%nie_horror(X):-
+%    boi_sie_ciemnosci(X).
+
+%1
+ 
+
+wiek(zenek,"13-25").
+wiek(jaœ, "5-12").
+wiek(ola, "5-12").
+wiek(ala, "13-25").
+
+plec(jaœ, "M").
+plec(zenek,"M").
+plec(ola, "K").
+plec(ala, "K").
+
+z_kim(jaœ, "Sam").
+z_kim(zenek,"Z rodzin¹").
+z_kim(ola,"Ze znajomymi").
+z_kim(ala,"Sam").
+
+pora(jaœ, "Popo³udnie").
+pora(zenek,"Wieczór").
+pora(ola,"Wieczór").
+pora(ala,"Wieczór").
+
+na_czym(jaœ,"Telefon").
+na_czym(zenek,"Telewizor").
+na_czym(ola,"Kino").
+na_czym(ala,"Telewizor").
+
+boi_sie_ciemnosci(jaœ, 0).
+boi_sie_ciemnosci(zenek,0).
+boi_sie_ciemnosci(ola,0).
+boi_sie_ciemnosci(ala,0).
+
+ma_poczucie_humoru(jaœ).
+ma_poczucie_humoru(ala).
+
+lubi_spokój(zenek).
+lubi_spokój(ala).
+
+jest_singlem(zenek).
+jest_singlem(ola).
+
+
+
+%2
+
+stat_polak(X):-
+    plec(X,"M"),wiek(X,"26-49").
+
+lubi_emocje(X):-
+    plec(X,"M"),wiek(X,"13-25"),z_kim(X,"Z rodzin¹").
+
+pe³en_energii(X):-
+    (   wiek(X,"13-25");wiek(X,"5-12");wiek(X,"50+") ), not(lubi_spokój(X)).
+wra¿liwy(X):-
+    (   wiek(X,"13-25");wiek(X,"50+") ),plec(X,"K").
+lubi_sie_smiac(X):-
+     (   wiek(X,"5-12"); wiek(X,"13-25")), ma_poczucie_humoru(X).
+samotnik(X):-
+    plec(X,"M"),not(z_kim(X,"Ze znajomymi" )).
+spo³ecznik(X):-
+    not(z_kim(X,"Sam")).
+imprezowicz(X):-
+    not(pora(X,"Popo³udnie")),not(jest_singlem(X)).
+horror(X):-
+    (   lubi_emocje(X);stat_polak(X)), (   boi_sie_ciemnosci(X,0), pora(X,"Wieczór") ).
+komedia(X):-
+        lubi_sie_smiac(X),samotnik(X).
+akcja(X):-
+    pe³en_energii(X), spo³ecznik(X).  
+romans(X):-
+    wra¿liwy(X),imprezowicz(X).
+
+%Zapytania:
+
+%Wnioskowanie w przód "osoba" numer 1:
+%stat_polak(zenek)
+%lubi_emocje(zenek)
+%pe³en_energii(zenek)
+%wra¿liwy(zenek)
+%lubi_sie_smiac(zenek)
+%samotnik(zenek)
+%spo³ecznik(zenek)
+%imprezowicz(zenek)
+%horror(zenek)
+%komedia(zenek)
+%akcja(zenek)
+%romans(zenek)
+
+%Wnioskowanie w przód "osoba" numer 2:
+%stat_polak(ola)
+%lubi_emocje(ola)
+%pe³en_energii(ola)
+%wra¿liwy(ola)
+%lubi_sie_smiac(ola)
+%samotnik(ola)
+%spo³ecznik(ola)
+%imprezowicz(ola)
+%horror(ola)
+%komedia(ola)
+%akcja(ola)
+%romans(ola)
+
+%Wnioskowanie w przód "osoba" numer 3:
+%stat_polak(jaœ)
+%lubi_emocje(jaœ)
+%pe³en_energii(jaœ)
+%wra¿liwy(jaœ)
+%lubi_sie_smiac(jaœ)
+%samotnik(jaœ)
+%spo³ecznik(jaœ)
+%imprezowicz(jaœ)
+%horror(jaœ)
+%komedia(jaœ)
+%akcja(jaœ)
+%romans(jaœ)
+
+%Wnioskowanie wstecz "osoba" numer 1:
+%horror(zenek)
+%stat_polak(zenek)
+%plec(zenek,"M")
+%wiek(zenek,"16-49")
+%lubi_emocje(zenek)
+%wiek(zenek,"13-25")
+%plec(zenek,"M")
+%z_kim(zenek,"Z rodzin¹")
+%boi_sie_ciemnosci(zenek,0)
+%pora(zenek,"Wieczór")
+
+%Wnioskowanie wstecz "osoba" numer 2:
+%romans(ala)
+%wra¿liwy(ala)
+%wiek(ala,"13-25")
+%wiek(ala,"50+")
+%plec(ala,"K")
+%imprezowicz(ala)
+%not(jest_singlem(ala))
+%not(pora(ala,"Popo³udnie"))
+
+%Wnioskowanie wstecz "osoba" numer 3:
+%akcja(ola)
+%pe³en_energii(ola)
+%wiek(ola,"5-12")
+%wiek(ola,"50+")
+%wiek(ola,"13-25")
+%not(lubi_spokój(ola))
+%spo³ecznik(ola)
+%not(z_kim(ola,"Sam))
